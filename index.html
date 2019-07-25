@@ -89,9 +89,9 @@
       ctx.textBaseline="middle";
       ctx.textAlign="center";
       
-      for(num= 1; num < 49; num++){
+      for(num= 0; num < 48; num++){
           ang = num * Math.PI / 24;
-          secNum = 49 - num;
+          secNum = 48 - num;
           ctx.rotate(ang);
           ctx.translate(0, -radius*0.85);
           ctx.rotate(-ang);
