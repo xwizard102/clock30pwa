@@ -93,12 +93,3 @@ function drawHand(ctx, pos, length, width) {
     ctx.stroke();
     ctx.rotate(-pos);
 }
-
-function drawHighlight(ctx, radius) {
-    ctx.strokeStyle = '#000000';
-    ctx.lineWidth = 5;
-    ctx.stroke();
-
-    ctx.beginPath();
-    ctx.arc(0, 0, radius * 0.06, 0, 2 * Math.PI);
-}
