@@ -78,9 +78,9 @@ function drawTime(ctx, radius) {
     //hour
     hour = (hour * Math.PI / 12) + (minute * Math.PI / (2 * 6 * 60)) + (second * Math.PI / (2 * 360 * 60));
     drawHand(ctx, hour, radius * 0.65, radius * 0.05);
-    // second
-    second = (second * Math.PI / 30);
-    drawHand(ctx, second, radius * 0.9, radius * 0.01);
+    // // second
+    // second = (second * Math.PI / 30);
+    // drawHand(ctx, second, radius * 0.9, radius * 0.01);
 }
 
 function drawHand(ctx, pos, length, width) {
