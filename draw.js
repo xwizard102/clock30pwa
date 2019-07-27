@@ -31,15 +31,22 @@ function drawNumbers(ctx, radius) {
     var orgFillStyle = ctx.fillStyle;
     var altFillStyle = "#000000";
 
+    var orgFont = ctx.font;
+    var altFont = ctx.font += " bold";
+
     for (num = 1; num < 49; num++) {
         ang = num * Math.PI / 24;
         ctx.rotate(ang);
         ctx.translate(0, -radius * 0.85);
         ctx.rotate(-ang);
-        if (num%12 == 0) ctx.fillStyle = altFillStyle;
-        var y = (num%24 == 0)? Math.pow(-1, num/24)*25 : 0;
-        ctx.fillText(num.toString(), 0, y);
+        if (num%12 == 0) {
+            ctx.fillStyle = altFillStyle;
+            ctx.font = altFont;
+        }
+        // var y = (num%24 == 0)? Math.pow(-1, num/24)*25 : 0;
+        ctx.fillText(num.toString(), 0, 0);
         ctx.fillStyle = orgFillStyle;
+        ctx.font = orgFont;
         ctx.rotate(ang);
         ctx.translate(0, radius * 0.85);
         ctx.rotate(-ang);
@@ -62,7 +69,6 @@ function drawSecondaryumbers(ctx, radius) {
         ctx.rotate(ang);
         ctx.translate(0, -radius * 0.85);
         ctx.rotate(-ang);
-        if (num%24 != 0)
         ctx.fillText(secNum.toString(), 0, 0);
         ctx.rotate(ang);
         ctx.translate(0, radius * 0.85);
