@@ -21,7 +21,25 @@ function drawFace(ctx, radius) {
     ctx.fill();
 }
 
-function drawNumbers(ctx, radius) {
+function drawNumbers(ctx, radius, hoursPerDay, isFullDay) {
+    var start = 1;
+    var end = hoursPerDay;
+    var half = hoursPerDay / 2;
+    var quarter = hoursPerDay / 4;
+    var isAM = new Date().getHours() < half;
+
+    if (!isFullDay) {
+        half = hoursPerDay / 4;
+        quarter = hoursPerDay / 8;
+
+        if (isAM) {
+            end = (hoursPerDay / 2);
+        } else {
+            start = (hoursPerDay / 2) + 1;
+            end = hoursPerDay;
+        }
+    }
+
     var ang;
     var num;
     ctx.font = radius * 0.08 + "px arial";
@@ -34,16 +52,15 @@ function drawNumbers(ctx, radius) {
     var orgFont = ctx.font;
     var altFont = ctx.font += " bold";
 
-    for (num = 1; num < 49; num++) {
-        ang = num * Math.PI / 24;
+    for (num = start; num < end+1; num++) {
+        ang = num * Math.PI / half;
         ctx.rotate(ang);
         ctx.translate(0, -radius * 0.85);
         ctx.rotate(-ang);
-        if (num%12 == 0) {
+        if (num%quarter == 0) {
             ctx.fillStyle = altFillStyle;
             ctx.font = altFont;
         }
-        // var y = (num%24 == 0)? Math.pow(-1, num/24)*25 : 0;
         ctx.fillText(num.toString(), 0, 0);
         ctx.fillStyle = orgFillStyle;
         ctx.font = orgFont;
@@ -53,7 +70,23 @@ function drawNumbers(ctx, radius) {
     }
 }
 
-function drawSecondaryumbers(ctx, radius) {
+function drawSecondaryumbers(ctx, radius, hoursPerDay, isFullDay) {
+    var start = 0;
+    var end = hoursPerDay;
+    var half = hoursPerDay / 2;
+    var isAM = new Date().getHours() < half;
+
+    if (!isFullDay) {
+        half = hoursPerDay / 4;
+        
+        if (isAM) {
+            end = hoursPerDay / 2;
+        } else {
+            start = hoursPerDay / 2;
+            end = hoursPerDay;
+        }
+    }
+
     var ang;
     var num;
     var secNum;
@@ -63,9 +96,9 @@ function drawSecondaryumbers(ctx, radius) {
 
     ctx.fillStyle = "#cccccc";
 
-    for (num = 0; num < 48; num++) {
-        ang = num * Math.PI / 24;
-        secNum = 48 - num;
+    for (num = start; num < end; num++) {
+        ang = num * Math.PI / half;
+        secNum = hoursPerDay - num;
         ctx.rotate(ang);
         ctx.translate(0, -radius * 0.85);
         ctx.rotate(-ang);
@@ -76,17 +109,16 @@ function drawSecondaryumbers(ctx, radius) {
     }
 }
 
-function drawTime(ctx, radius) {
+function drawTime(ctx, radius, hoursPerDay, isFullDay) {
+    var quarter = isFullDay? hoursPerDay / 4 : hoursPerDay / 8;
+
     var now = new Date();
     var hour = now.getHours();
     var minute = now.getMinutes();
     var second = now.getSeconds();
     //hour
-    hour = (hour * Math.PI / 12) + (minute * Math.PI / (2 * 6 * 60)) + (second * Math.PI / (2 * 360 * 60));
+    hour = (hour * Math.PI / quarter) + (minute * Math.PI / (quarter * 60)) + (second * Math.PI / (quarter * 60 * 60));
     drawHand(ctx, hour, radius * 0.65, radius * 0.05);
-    // // second
-    // second = (second * Math.PI / 30);
-    // drawHand(ctx, second, radius * 0.9, radius * 0.01);
 }
 
 function drawHand(ctx, pos, length, width) {

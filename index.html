@@ -36,12 +36,15 @@
   setInterval(drawClock, 1000);
 
   function drawClock() {
+    var hoursPerDay = 48;
+    var isFullDay = true;
+
     drawFace(ctx, radius);
-    drawNumbers(ctx, radius);
-    drawSecondaryumbers(ctx, radius*0.85);
+    drawNumbers(ctx, radius, hoursPerDay, isFullDay);
+    drawSecondaryumbers(ctx, radius*0.85, hoursPerDay, isFullDay);
     drawSecondsFace(ctx, radius);
     drawSecondsNumbers(ctx, radius);
-    drawTime(ctx, radius);
+    drawTime(ctx, radius, hoursPerDay, isFullDay);
     drawSecondsTime(ctx, radius);
   }
 </script>
