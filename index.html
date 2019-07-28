@@ -16,6 +16,8 @@
   </style>
   <body>
       <center>
+      <a href="javascript: switchStyle();">Alternative style (am/pm vs 48 hours)</a>
+      <br/><br/>
       <div style="overflow: hidden;">
         <canvas id="canvas" class="canvas" width="800" height="800" style=" border: solid white 2px; background-color:#696969; opacity:0.9;"/>
       </div>
@@ -29,6 +31,7 @@
   var canvas = document.getElementById("canvas");
   var ctx = canvas.getContext("2d");
   var radius = canvas.height / 2;
+  var isFullDay = true;
   
   ctx.translate(radius, radius);
   radius = radius * 0.90
@@ -37,7 +40,6 @@
 
   function drawClock() {
     var hoursPerDay = 48;
-    var isFullDay = true;
 
     drawFace(ctx, radius);
     drawNumbers(ctx, radius, hoursPerDay, isFullDay);
@@ -46,6 +48,11 @@
     drawSecondsNumbers(ctx, radius);
     drawTime(ctx, radius, hoursPerDay, isFullDay);
     drawSecondsTime(ctx, radius);
+  }
+
+  function switchStyle() {
+    isFullDay = !isFullDay;
+    drawClock();
   }
 </script>
 
