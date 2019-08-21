@@ -26,11 +26,11 @@ function drawNumbers(ctx, radius, hoursPerDay, isFullDay) {
     var end = hoursPerDay;
     var half = hoursPerDay / 2;
     var quarter = hoursPerDay / 4;
-    var isAM = new Date().getHours() < half;
 
     if (!isFullDay) {
         half = hoursPerDay / 4;
         quarter = hoursPerDay / 8;
+        var isAM = new Date().getHours() < half;
 
         if (isAM) {
             end = (hoursPerDay / 2);
@@ -74,10 +74,10 @@ function drawSecondaryumbers(ctx, radius, hoursPerDay, isFullDay) {
     var start = 0;
     var end = hoursPerDay;
     var half = hoursPerDay / 2;
-    var isAM = new Date().getHours() < half;
 
     if (!isFullDay) {
         half = hoursPerDay / 4;
+        var isAM = new Date().getHours() < half;
         
         if (isAM) {
             end = hoursPerDay / 2;
