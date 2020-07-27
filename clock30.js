@@ -4,7 +4,7 @@
 2. drawClockNumbers             DONE
 3. drawClockHand                DONE
 
-4. drawClockSecondaryNumbers    
+4. drawClockSecondaryNumbers    DONE
 
 5. drawSecondsFace              
 6. drawSecondsNumbers           
@@ -18,16 +18,11 @@ ctx.translate(radius, radius);
 
 setInterval(drawClock30, 1000, ctx);
 
-// var isFullDay = true;
-// radius = radius * 0.90
-
-// setInterval(drawClock, 1000);
-
 function drawClock30(ctx) {
     drawClockFace(ctx);
     drawClockNumbers(ctx);
     drawClockHand(ctx);
-    // drawSecondaryumbers(ctx, radius*0.85, hoursPerDay, isFullDay);
+    drawClockSecondaryNumbers(ctx);
     // drawSecondsFace(ctx, radius);
     // drawSecondsNumbers(ctx, radius);
     // drawSecondsTime(ctx, radius);
@@ -110,7 +105,9 @@ function drawClockNumbers(ctx, isFullDay = true) {
     }
 }
 
-function drawSecondaryumbers(ctx, radius, hoursPerDay, isFullDay) {
+function drawClockSecondaryNumbers(ctx, isFullDay = true) {
+    var radius = canvas.height / 2 * 0.9 * 0.85;
+    var hoursPerDay = 48;
     var start = 0;
     var end = hoursPerDay;
     var half = hoursPerDay / 2;
@@ -127,18 +124,15 @@ function drawSecondaryumbers(ctx, radius, hoursPerDay, isFullDay) {
         }
     }
 
-    var ang;
-    var num;
-    var secNum;
     ctx.font = radius * 0.08 + "px arial";
     ctx.textBaseline = "middle";
     ctx.textAlign = "center";
 
     ctx.fillStyle = "#cccccc";
 
-    for (num = start; num < end; num++) {
-        ang = num * Math.PI / half;
-        secNum = hoursPerDay - num;
+    for (var num = start; num < end; num++) {
+        var ang = num * Math.PI / half;
+        var secNum = hoursPerDay - num;
         ctx.rotate(ang);
         ctx.translate(0, -radius * 0.85);
         ctx.rotate(-ang);
