@@ -8,7 +8,7 @@
 
 5. drawSecondsFace              DONE
 6. drawSecondsNumbers           DONE
-7. drawSecondsHand              
+7. drawSecondsHand              DONE
 */
 
 var canvas = document.getElementById("canvas");
@@ -27,7 +27,7 @@ function drawClock30(ctx) {
 
     drawSecondsFace(ctx);
     drawSecondsNumbers(ctx);
-    // drawSecondsTime(ctx, radius);
+    drawSecondsHand(ctx);
 }
 
 function switchStyle() {
@@ -107,6 +107,20 @@ function drawClockNumbers(ctx, isFullDay = true) {
     }
 }
 
+function drawClockHand(ctx, isFullDay = true) {
+    var radius = canvas.height / 2 * 0.9;
+    var hoursPerDay = 48;
+    var quarter = isFullDay? hoursPerDay / 4 : hoursPerDay / 8;
+
+    var now = new Date();
+    var hour = now.getHours();
+    var minute = now.getMinutes();
+    var second = now.getSeconds();
+    //hour
+    hour = (hour * Math.PI / quarter) + (minute * Math.PI / (quarter * 60)) + (second * Math.PI / (quarter * 60 * 60));
+    drawHand(ctx, hour, radius * 0.65, radius * 0.05);
+}
+
 function drawClockSecondaryNumbers(ctx, isFullDay = true) {
     var radius = canvas.height / 2 * 0.9 * 0.85;
     var hoursPerDay = 48;
@@ -143,31 +157,6 @@ function drawClockSecondaryNumbers(ctx, isFullDay = true) {
         ctx.translate(0, radius * 0.85);
         ctx.rotate(-ang);
     }
-}
-
-function drawClockHand(ctx, isFullDay = true) {
-    var radius = canvas.height / 2 * 0.9;
-    var hoursPerDay = 48;
-    var quarter = isFullDay? hoursPerDay / 4 : hoursPerDay / 8;
-
-    var now = new Date();
-    var hour = now.getHours();
-    var minute = now.getMinutes();
-    var second = now.getSeconds();
-    //hour
-    hour = (hour * Math.PI / quarter) + (minute * Math.PI / (quarter * 60)) + (second * Math.PI / (quarter * 60 * 60));
-    drawHand(ctx, hour, radius * 0.65, radius * 0.05);
-}
-
-function drawHand(ctx, pos, length, width) {
-    ctx.beginPath();
-    ctx.lineWidth = width;
-    ctx.lineCap = "round";
-    ctx.moveTo(0, 0);
-    ctx.rotate(pos);
-    ctx.lineTo(0, -length);
-    ctx.stroke();
-    ctx.rotate(-pos);
 }
 
 function drawSecondsFace(ctx) {
@@ -217,18 +206,19 @@ function drawSecondsNumbers(ctx) {
     }
 }
 
-function drawSecondsTime(ctx, radius) {
+function drawSecondsHand(ctx) {
+    var radius = canvas.height / 2 * 0.9;
     var now = new Date();
     var second = now.getSeconds();
     var r = radius / 6;
     // second
     second = (second * Math.PI / 30);
-    drawSecondsHand(ctx, second, r * 0.9, radius * 0.01, radius/2);
+    drawHand(ctx, second, r * 0.9, radius * 0.01, radius/2);
 }
 
-function drawSecondsHand(ctx, pos, length, width, shift) {
+function drawHand(ctx, pos, length, width, shift = 0) {
     ctx.translate(0, shift);
-
+    
     ctx.beginPath();
     ctx.lineWidth = width;
     ctx.lineCap = "round";
