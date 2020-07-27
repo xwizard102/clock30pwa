@@ -1,32 +1,27 @@
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 var radius = canvas.height / 2;
-var isFullDay = true;
-
 ctx.translate(radius, radius);
-radius = radius * 0.90
 
-setInterval(drawClock, 1000);
+var isFullDay = false;
+setInterval(drawClock30, 1000, ctx);
 
-function drawClock() {
-    var hoursPerDay = 48;
+function drawClock30(ctx) {
 
-    drawFace(ctx);
-    drawNumbers(ctx, radius, hoursPerDay, isFullDay);
-    drawSecondaryumbers(ctx, radius*0.85, hoursPerDay, isFullDay);
-    drawSecondsFace(ctx, radius);
-    drawSecondsNumbers(ctx, radius);
-    drawTime(ctx, radius, hoursPerDay, isFullDay);
-    drawSecondsTime(ctx, radius);
+    var drawSteps = [drawClockFace, drawClockNumbers, drawClockHand
+        , drawClockSecondaryNumbers
+        , drawSecondsFace, drawSecondsNumbers, drawSecondsHand
+    ];
+    drawSteps.forEach(step => step(ctx, isFullDay));
 }
 
 function switchStyle() {
     isFullDay = !isFullDay;
-    drawClock();
+    drawClock30(ctx);
 }
 
-function drawFace(ctx) {
-    var radius = ctx.canvas.height / 2 * 0.90;
+function drawClockFace(ctx) {
+    var radius = ctx.canvas.height / 2 * 0.9;
 
     ctx.beginPath();
     ctx.arc(0, 0, radius, 0, 2 * Math.PI);
@@ -48,7 +43,9 @@ function drawFace(ctx) {
     ctx.fill();
 }
 
-function drawNumbers(ctx, radius, hoursPerDay, isFullDay) {
+function drawClockNumbers(ctx, isFullDay = true) {
+    var radius = canvas.height / 2 * 0.9;
+    var hoursPerDay = 48;
     var start = 1;
     var end = hoursPerDay;
     var half = hoursPerDay / 2;
@@ -67,8 +64,6 @@ function drawNumbers(ctx, radius, hoursPerDay, isFullDay) {
         }
     }
 
-    var ang;
-    var num;
     ctx.font = radius * 0.08 + "px arial";
     ctx.textBaseline = "middle";
     ctx.textAlign = "center";
@@ -79,7 +74,7 @@ function drawNumbers(ctx, radius, hoursPerDay, isFullDay) {
     var orgFont = ctx.font;
     var altFont = ctx.font += " bold";
 
-    for (num = start; num < end+1; num++) {
+    for (var num = start, ang = 0; num < end+1; num++) {
         ang = num * Math.PI / half;
         ctx.rotate(ang);
         ctx.translate(0, -radius * 0.85);
@@ -97,7 +92,23 @@ function drawNumbers(ctx, radius, hoursPerDay, isFullDay) {
     }
 }
 
-function drawSecondaryumbers(ctx, radius, hoursPerDay, isFullDay) {
+function drawClockHand(ctx, isFullDay = true) {
+    var radius = canvas.height / 2 * 0.9;
+    var hoursPerDay = 48;
+    var quarter = isFullDay? hoursPerDay / 4 : hoursPerDay / 8;
+
+    var now = new Date();
+    var hour = now.getHours();
+    var minute = now.getMinutes();
+    var second = now.getSeconds();
+    //hour
+    hour = (hour * Math.PI / quarter) + (minute * Math.PI / (quarter * 60)) + (second * Math.PI / (quarter * 60 * 60));
+    drawHand(ctx, hour, radius * 0.65, radius * 0.05);
+}
+
+function drawClockSecondaryNumbers(ctx, isFullDay = true) {
+    var radius = canvas.height / 2 * 0.9 * 0.85;
+    var hoursPerDay = 48;
     var start = 0;
     var end = hoursPerDay;
     var half = hoursPerDay / 2;
@@ -114,18 +125,15 @@ function drawSecondaryumbers(ctx, radius, hoursPerDay, isFullDay) {
         }
     }
 
-    var ang;
-    var num;
-    var secNum;
     ctx.font = radius * 0.08 + "px arial";
     ctx.textBaseline = "middle";
     ctx.textAlign = "center";
 
     ctx.fillStyle = "#cccccc";
 
-    for (num = start; num < end; num++) {
-        ang = num * Math.PI / half;
-        secNum = hoursPerDay - num;
+    for (var num = start; num < end; num++) {
+        var ang = num * Math.PI / half;
+        var secNum = hoursPerDay - num;
         ctx.rotate(ang);
         ctx.translate(0, -radius * 0.85);
         ctx.rotate(-ang);
@@ -136,30 +144,8 @@ function drawSecondaryumbers(ctx, radius, hoursPerDay, isFullDay) {
     }
 }
 
-function drawTime(ctx, radius, hoursPerDay, isFullDay) {
-    var quarter = isFullDay? hoursPerDay / 4 : hoursPerDay / 8;
-
-    var now = new Date();
-    var hour = now.getHours();
-    var minute = now.getMinutes();
-    var second = now.getSeconds();
-    //hour
-    hour = (hour * Math.PI / quarter) + (minute * Math.PI / (quarter * 60)) + (second * Math.PI / (quarter * 60 * 60));
-    drawHand(ctx, hour, radius * 0.65, radius * 0.05);
-}
-
-function drawHand(ctx, pos, length, width) {
-    ctx.beginPath();
-    ctx.lineWidth = width;
-    ctx.lineCap = "round";
-    ctx.moveTo(0, 0);
-    ctx.rotate(pos);
-    ctx.lineTo(0, -length);
-    ctx.stroke();
-    ctx.rotate(-pos);
-}
-
-function drawSecondsFace(ctx, radius) {
+function drawSecondsFace(ctx) {
+    var radius = canvas.height / 2 * 0.9;
     var grad;
     var y = radius / 2;
     var r = radius / 6;
@@ -171,7 +157,7 @@ function drawSecondsFace(ctx, radius) {
 
     grad = ctx.createRadialGradient(0, y, r * 0.95, 0, y, r * 1.05);
     grad.addColorStop(0, '#696969');
-    grad.addColorStop(0.5, 'white');
+    grad.addColorStop(0.5, '#fff');
     grad.addColorStop(1, '#696969');
 
     ctx.strokeStyle = grad;
@@ -184,19 +170,17 @@ function drawSecondsFace(ctx, radius) {
     ctx.fill();
 }
 
-function drawSecondsNumbers(ctx, radius) {
+function drawSecondsNumbers(ctx) {
+    var radius = canvas.height / 2 * 0.9;
     var y = radius / 2;
     var r = radius / 6;
 
-    var ang;
-    var num;
-    var secNum;
     ctx.font = r * 0.08 + "px arial";
     ctx.textBaseline = "middle";
     ctx.textAlign = "center";
 
-    for (num = 5; num < 61; num += 5) {
-        ang = num * Math.PI / 30;
+    for (var num = 5; num < 61; num += 5) {
+        var ang = num * Math.PI / 30;
         ctx.rotate(ang);
         ctx.translate(0, -r * 0.85);
         ctx.rotate(-ang);
@@ -207,18 +191,19 @@ function drawSecondsNumbers(ctx, radius) {
     }
 }
 
-function drawSecondsTime(ctx, radius) {
+function drawSecondsHand(ctx) {
+    var radius = canvas.height / 2 * 0.9;
     var now = new Date();
     var second = now.getSeconds();
     var r = radius / 6;
     // second
     second = (second * Math.PI / 30);
-    drawSecondsHand(ctx, second, r * 0.9, radius * 0.01, radius/2);
+    drawHand(ctx, second, r * 0.9, radius * 0.01, radius/2);
 }
 
-function drawSecondsHand(ctx, pos, length, width, shift) {
+function drawHand(ctx, pos, length, width, shift = 0) {
     ctx.translate(0, shift);
-
+    
     ctx.beginPath();
     ctx.lineWidth = width;
     ctx.lineCap = "round";
