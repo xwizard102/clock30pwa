@@ -1,14 +1,14 @@
 /*
 *. Setup Skeleton
-1. drawClockFace                (STATIC)    DONE
-2. drawClockNumbers             (STATIC)    DONE
-3. drawClockHand                (DYNAMIC)   DONE
+1. drawClockFace                DONE
+2. drawClockNumbers             DONE
+3. drawClockHand                DONE
 
-4. drawClockSecondaryNumbers    (STATIC)
+4. drawClockSecondaryNumbers    
 
-5. drawSecondsFace              (STATIC)
-6. drawSecondsNumbers           (STATIC)
-7. drawSecondsHand              (DYNAMIC)
+5. drawSecondsFace              
+6. drawSecondsNumbers           
+7. drawSecondsHand              
 */
 
 var canvas = document.getElementById("canvas");
@@ -16,30 +16,26 @@ var ctx = canvas.getContext("2d");
 var radius = canvas.height / 2;
 ctx.translate(radius, radius);
 
-drawClockFace(ctx);
-drawClockNumbers(ctx);
-drawClockHand(ctx);
+setInterval(drawClock30, 1000, ctx);
 
 // var isFullDay = true;
 // radius = radius * 0.90
 
 // setInterval(drawClock, 1000);
 
-function drawClock() {
-    var hoursPerDay = 48;
-
-    drawFace(ctx);
-    drawNumbers(ctx, radius, hoursPerDay, isFullDay);
-    drawSecondaryumbers(ctx, radius*0.85, hoursPerDay, isFullDay);
-    drawSecondsFace(ctx, radius);
-    drawSecondsNumbers(ctx, radius);
-    drawTime(ctx, radius, hoursPerDay, isFullDay);
-    drawSecondsTime(ctx, radius);
+function drawClock30(ctx) {
+    drawClockFace(ctx);
+    drawClockNumbers(ctx);
+    drawClockHand(ctx);
+    // drawSecondaryumbers(ctx, radius*0.85, hoursPerDay, isFullDay);
+    // drawSecondsFace(ctx, radius);
+    // drawSecondsNumbers(ctx, radius);
+    // drawSecondsTime(ctx, radius);
 }
 
 function switchStyle() {
     isFullDay = !isFullDay;
-    drawClock();
+    drawClock30();
 }
 
 function drawClockFace(ctx) {
