@@ -1,7 +1,7 @@
 /*
 *. Setup Skeleton
-1. drawClockFace                (STATIC)
-2. drawClockNumbers             (STATIC)
+1. drawClockFace                (STATIC)    DONE
+2. drawClockNumbers             (STATIC)    DONE
 3. drawClockHand                (DYNAMIC)
 
 4. drawClockSecondaryNumbers    (STATIC)
@@ -17,6 +17,7 @@ var radius = canvas.height / 2;
 ctx.translate(radius, radius);
 
 drawClockFace(ctx);
+drawClockNumbers(ctx);
 
 // var isFullDay = true;
 // radius = radius * 0.90
@@ -41,7 +42,7 @@ function switchStyle() {
 }
 
 function drawClockFace(ctx) {
-    var radius = ctx.canvas.height / 2 * 0.90;
+    var radius = ctx.canvas.height / 2 * 0.9;
 
     ctx.beginPath();
     ctx.arc(0, 0, radius, 0, 2 * Math.PI);
@@ -63,7 +64,9 @@ function drawClockFace(ctx) {
     ctx.fill();
 }
 
-function drawNumbers(ctx, radius, hoursPerDay, isFullDay) {
+function drawClockNumbers(ctx, isFullDay = true) {
+    var radius = canvas.height / 2 * 0.9;
+    var hoursPerDay = 48;
     var start = 1;
     var end = hoursPerDay;
     var half = hoursPerDay / 2;
@@ -82,8 +85,6 @@ function drawNumbers(ctx, radius, hoursPerDay, isFullDay) {
         }
     }
 
-    var ang;
-    var num;
     ctx.font = radius * 0.08 + "px arial";
     ctx.textBaseline = "middle";
     ctx.textAlign = "center";
@@ -94,7 +95,7 @@ function drawNumbers(ctx, radius, hoursPerDay, isFullDay) {
     var orgFont = ctx.font;
     var altFont = ctx.font += " bold";
 
-    for (num = start; num < end+1; num++) {
+    for (var num = start, ang = 0; num < end+1; num++) {
         ang = num * Math.PI / half;
         ctx.rotate(ang);
         ctx.translate(0, -radius * 0.85);
