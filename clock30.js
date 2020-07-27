@@ -7,7 +7,7 @@
 4. drawClockSecondaryNumbers    DONE
 
 5. drawSecondsFace              DONE
-6. drawSecondsNumbers           
+6. drawSecondsNumbers           DONE
 7. drawSecondsHand              
 */
 
@@ -26,7 +26,7 @@ function drawClock30(ctx) {
     drawClockSecondaryNumbers(ctx);
 
     drawSecondsFace(ctx);
-    // drawSecondsNumbers(ctx, radius);
+    drawSecondsNumbers(ctx);
     // drawSecondsTime(ctx, radius);
 }
 
@@ -196,19 +196,17 @@ function drawSecondsFace(ctx) {
     ctx.fill();
 }
 
-function drawSecondsNumbers(ctx, radius) {
+function drawSecondsNumbers(ctx) {
+    var radius = canvas.height / 2 * 0.9;
     var y = radius / 2;
     var r = radius / 6;
 
-    var ang;
-    var num;
-    var secNum;
     ctx.font = r * 0.08 + "px arial";
     ctx.textBaseline = "middle";
     ctx.textAlign = "center";
 
-    for (num = 5; num < 61; num += 5) {
-        ang = num * Math.PI / 30;
+    for (var num = 5; num < 61; num += 5) {
+        var ang = num * Math.PI / 30;
         ctx.rotate(ang);
         ctx.translate(0, -r * 0.85);
         ctx.rotate(-ang);
