@@ -3,19 +3,16 @@ var ctx = canvas.getContext("2d");
 var radius = canvas.height / 2;
 ctx.translate(radius, radius);
 
-var isFullDay = true;
+var isFullDay = false;
 setInterval(drawClock30, 1000, ctx);
 
 function drawClock30(ctx) {
-    drawClockFace(ctx);
-    drawClockNumbers(ctx, isFullDay);
-    drawClockHand(ctx, isFullDay);
 
-    drawClockSecondaryNumbers(ctx, isFullDay);
-
-    drawSecondsFace(ctx);
-    drawSecondsNumbers(ctx);
-    drawSecondsHand(ctx);
+    var drawSteps = [drawClockFace, drawClockNumbers, drawClockHand
+        , drawClockSecondaryNumbers
+        , drawSecondsFace, drawSecondsNumbers, drawSecondsHand
+    ];
+    drawSteps.forEach(step => step(ctx, isFullDay));
 }
 
 function switchStyle() {
