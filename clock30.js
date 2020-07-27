@@ -1,16 +1,3 @@
-/*
-*. Setup Skeleton
-1. drawClockFace                DONE
-2. drawClockNumbers             DONE
-3. drawClockHand                DONE
-
-4. drawClockSecondaryNumbers    DONE
-
-5. drawSecondsFace              DONE
-6. drawSecondsNumbers           DONE
-7. drawSecondsHand              DONE
-*/
-
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 var radius = canvas.height / 2;
