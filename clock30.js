@@ -1,12 +1,27 @@
+/*
+*. Setup Skeleton
+1. drawClockFace                (STATIC)
+2. drawClockNumbers             (STATIC)
+3. drawClockHand                (DYNAMIC)
+
+4. drawClockSecondaryNumbers    (STATIC)
+
+5. drawSecondsFace              (STATIC)
+6. drawSecondsNumbers           (STATIC)
+7. drawSecondsHand              (DYNAMIC)
+*/
+
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 var radius = canvas.height / 2;
-var isFullDay = true;
-
 ctx.translate(radius, radius);
-radius = radius * 0.90
 
-setInterval(drawClock, 1000);
+drawClockFace(ctx);
+
+// var isFullDay = true;
+// radius = radius * 0.90
+
+// setInterval(drawClock, 1000);
 
 function drawClock() {
     var hoursPerDay = 48;
@@ -25,7 +40,7 @@ function switchStyle() {
     drawClock();
 }
 
-function drawFace(ctx) {
+function drawClockFace(ctx) {
     var radius = ctx.canvas.height / 2 * 0.90;
 
     ctx.beginPath();
