@@ -2,7 +2,7 @@
 *. Setup Skeleton
 1. drawClockFace                (STATIC)    DONE
 2. drawClockNumbers             (STATIC)    DONE
-3. drawClockHand                (DYNAMIC)
+3. drawClockHand                (DYNAMIC)   DONE
 
 4. drawClockSecondaryNumbers    (STATIC)
 
@@ -18,6 +18,7 @@ ctx.translate(radius, radius);
 
 drawClockFace(ctx);
 drawClockNumbers(ctx);
+drawClockHand(ctx);
 
 // var isFullDay = true;
 // radius = radius * 0.90
@@ -152,7 +153,9 @@ function drawSecondaryumbers(ctx, radius, hoursPerDay, isFullDay) {
     }
 }
 
-function drawTime(ctx, radius, hoursPerDay, isFullDay) {
+function drawClockHand(ctx, isFullDay = true) {
+    var radius = canvas.height / 2 * 0.9;
+    var hoursPerDay = 48;
     var quarter = isFullDay? hoursPerDay / 4 : hoursPerDay / 8;
 
     var now = new Date();
