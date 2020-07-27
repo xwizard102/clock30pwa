@@ -6,7 +6,7 @@
 
 4. drawClockSecondaryNumbers    DONE
 
-5. drawSecondsFace              
+5. drawSecondsFace              DONE
 6. drawSecondsNumbers           
 7. drawSecondsHand              
 */
@@ -22,8 +22,10 @@ function drawClock30(ctx) {
     drawClockFace(ctx);
     drawClockNumbers(ctx);
     drawClockHand(ctx);
+
     drawClockSecondaryNumbers(ctx);
-    // drawSecondsFace(ctx, radius);
+
+    drawSecondsFace(ctx);
     // drawSecondsNumbers(ctx, radius);
     // drawSecondsTime(ctx, radius);
 }
@@ -168,7 +170,8 @@ function drawHand(ctx, pos, length, width) {
     ctx.rotate(-pos);
 }
 
-function drawSecondsFace(ctx, radius) {
+function drawSecondsFace(ctx) {
+    var radius = canvas.height / 2 * 0.9;
     var grad;
     var y = radius / 2;
     var r = radius / 6;
@@ -180,7 +183,7 @@ function drawSecondsFace(ctx, radius) {
 
     grad = ctx.createRadialGradient(0, y, r * 0.95, 0, y, r * 1.05);
     grad.addColorStop(0, '#696969');
-    grad.addColorStop(0.5, 'white');
+    grad.addColorStop(0.5, '#fff');
     grad.addColorStop(1, '#696969');
 
     ctx.strokeStyle = grad;
