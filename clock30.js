@@ -1,12 +1,39 @@
-function drawFace(ctx, radius) {
-    var grad;
+var canvas = document.getElementById("canvas");
+var ctx = canvas.getContext("2d");
+var radius = canvas.height / 2;
+var isFullDay = true;
+
+ctx.translate(radius, radius);
+radius = radius * 0.90
+
+setInterval(drawClock, 1000);
+
+function drawClock() {
+    var hoursPerDay = 48;
+
+    drawFace(ctx);
+    drawNumbers(ctx, radius, hoursPerDay, isFullDay);
+    drawSecondaryumbers(ctx, radius*0.85, hoursPerDay, isFullDay);
+    drawSecondsFace(ctx, radius);
+    drawSecondsNumbers(ctx, radius);
+    drawTime(ctx, radius, hoursPerDay, isFullDay);
+    drawSecondsTime(ctx, radius);
+}
+
+function switchStyle() {
+    isFullDay = !isFullDay;
+    drawClock();
+}
+
+function drawFace(ctx) {
+    var radius = ctx.canvas.height / 2 * 0.90;
 
     ctx.beginPath();
     ctx.arc(0, 0, radius, 0, 2 * Math.PI);
     ctx.fillStyle = 'white';
     ctx.fill();
 
-    grad = ctx.createRadialGradient(0, 0, radius * 0.95, 0, 0, radius * 1.05);
+    var grad = ctx.createRadialGradient(0, 0, radius * 0.95, 0, 0, radius * 1.05);
     grad.addColorStop(0, '#696969');
     grad.addColorStop(0.5, 'white');
     grad.addColorStop(1, '#696969');
