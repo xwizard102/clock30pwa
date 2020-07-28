@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/electron.css">
+    <title>Clock 30</title>
+    <script>
+      var app = require('./renderer.js').app;
+      
+      require('electron-disable-file-drop')
+    </script>
+  </head>
+  <body>
+      <center>
+      <div style="overflow: hidden;">
+        <div class="close" onclick="app.quit();">
+          <div class="closeIco">&times;</div>
+        </div>
+        <a href="#" onclick="switchStyle()">Alternative style (am/pm vs 48 hours)</a>
+        <br/>
+        <canvas id="canvas" class="canvas" width="330" height="330"/>
+      </div>
+    </center>
+  </body>
+
+<script src="clock30.js"></script>
+</html>

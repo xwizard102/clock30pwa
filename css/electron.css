@@ -1,0 +1,39 @@
+.canvas {
+    border: solid white 2px;
+    background-color:#fff;
+    border-radius:50%;
+    opacity: 0.85;
+    -webkit-app-region: drag;
+}
+
+/* The Close Button */
+.close {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+
+    color: #696969;
+    float: right;
+    font-size: 16px;
+    border:2px solid #696969;    
+    border-radius:50%;
+    height:17px;
+    width:17px;
+    font-weight: bold;
+   -moz-border-radius:50%;
+    -webkit-border-radius:50%;
+    z-index: 99;
+}
+
+.close:hover,
+.close:focus {
+    color: #c8c8c8;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.closeIco {
+    margin-left: 4px;
+    margin-top: 0px;
+}
